@@ -1,0 +1,57 @@
+FILE *fp;
+fp = fopen("fajl.txt", "rt");
+fprintf(fp, "Hello");
+fclose(fp);
+Saját halmaz típus:
+typedef struct Halmaz {
+   int elemszam;
+   int *dintomb;
+} Halmaz;
+Halmaz *h;
+h = uj_halmaz();
+halmaz_betesz(h, 5); halmaz_betesz(h, 9);
+halmaz_felszabadit(h);
+
+void intet_novel(int *i);
+int x = 3;
+intet_novel(&x);
+void tombot_kiir(int *i, int meret);
+int tomb[10];
+tombot_kiir(tomb, 10);
+
+
+int globalis_valtozo;            /* globális, projektben */
+ 
+int globalis_fv(void) {
+   int lokalis;
+   static int statikus_lokalis;
+   ………
+}
+ 
+static int statikus_globalis;    /* globális, de csak a modulban */
+ 
+static int modul_fv(void) {
+   ………
+}
+Ilyen fejlécfájlt kell írni:
+
+modul.h
+#ifndef MODUL_H_INCLUDED
+#define MODUL_H_INCLUDED
+ 
+extern int globalis_valtozo;     /* globálisok deklarációi */
+int globalis_fv(void);
+ 
+#endif
+
+
+
+nt globalis = 5; -> modul.c
+extern int globalis; -> modul.h
+
+#include "modul.h"
+ 
+int main(void) {
+    int a, b = 7;
+    a = b + globalis;
+foprogram.c

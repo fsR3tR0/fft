@@ -1,0 +1,172 @@
+
+Írjon C programot, mely a standard bemenetrõl beolvas egy darabszámot, majd ennyi egész adatot.
+A program írja ki a standard kimenetre a legnagyobb hárommal osztható adatot.
+Feltételezheti, hogy az adatsor legalább egy hárommal osztható értéket tartalmaz, de nem biztos, hogy az elsõ adat ilyen.
+
+#include <stdio.h>
+int main()						
+{
+	int n, i, max3, volt = 0;		
+	scanf("%d", &n);				
+	for (i = 0; i < n; i = i+1) {
+		int a;
+		scanf("%d", &a);
+		if (a % 3 != 0)				
+			continue;
+		if (volt) {					
+			if (a > max3)			
+				max3 = a;			
+		}
+		else {
+			max3 = a;
+			volt = 1;
+		}
+	}
+	printf("%d", max3);
+	return 0;						
+}
+/*************************************************************/
+
+Írjon C programot, mely a standard bemenetrõl beolvas egy darabszámot, majd ennyi egész adatot.
+A program írja ki a standard kimenetre a legkisebb héttel osztható adatot.
+Feltételezheti, hogy az adatsor legalább egy héttel osztható értéket tartalmaz, de nem biztos, hogy az elsõ adat ilyen.
+                                  
+#include <stdio.h>
+int main()						
+{                                 
+	int n, i, min7, volt = 0;     
+	scanf("%d", &n);              
+	for (i = 0; i < n; i = i+1) { 
+		int a;                    
+		scanf("%d", &a);          
+		if (a % 7 != 0)           
+			continue;             
+		if (volt) {               
+			if (a < min7)         
+				min7 = a;         
+		}
+		else {
+			min7 = a;
+			volt = 1;
+		}
+	}
+	printf("%d", min7);				
+	return 0;
+}
+
+/*************************************************************/
+
+Írjon C programot, mely a standard bemenetére érkezõ, -1.0 és +1.0 közé esõ valós számokat dolgozza fel.
+A program feladata kiírni a standard kimenetre a legkisebb pozitív és a legnagyobb negatív szám különbségét.
+A számsor végét a 0.0 szám jelzi, melyet már nem kell feldolgoznia.
+Feltételezheti, hogy legalább egy pozitív és legalább egy negatív szám érkezik.
+
+#include <stdio.h>
+int main(void)						
+{                                       
+	double a, min = 1.0, max = -1.0;  
+	scanf("%lf", &a);              
+	while (a != 0.0)               
+	{                              
+		if (a > 0.0 && a < min)    
+			min = a;               
+		if (a < 0.0 && a > max)
+			max = a;
+		scanf("%lf", &a);
+	}                                 
+	printf("%f", max-min);            
+	return 0;                         
+}                                     
+/************************************************************/
+
+Írjon C programot, mely a standard bemenetére érkezõ egész számokat dolgozza fel.
+A program feladata, hogy képezze az összes bejövõ szám abszolút értékét, majd kiírja a standard kimenetre a legkisebb és a legnagyobb érték különbségét.
+A számsor végét a 0 szám jelzi, melyet már nem kell feldolgoznia.
+Feltételezheti, hogy legalább egy feldolgozandó szám érkezik.
+
+#include <stdio.h>
+int main(void)                        
+{                                     
+	int a, min, max;					
+	scanf("%d", &a);                  
+	if (a < 0) a = -a;                
+	min = a;                          
+	max = a;                          
+	while (a != 0)                    
+	{                                 
+		if (a > max)                  
+			max = a;                  
+		if (a < min)                  
+			min = a;                  
+		scanf("%d", &a);              
+		if (a < 0) a = -a;            
+	}                                 
+	printf("%f", max-min);				
+	return 0;							
+}
+
+/************************************************************/
+
+Írjon C programot, mely egy pozitív egész számot (0 < n < 10) olvas be a standard bemenetrõl, majd a standard kimeneten megjeleníti az n*n-es maradéktáblázatot.
+A táblázat a-adik sorának b-edik eleme az a/b egész osztás után adódó maradékot tartalmazza.
+A táblázat tartalmazza az a értékeket megadó fejlécoszlopot és a b értékeket megadó fejlécsort is. n=5-re a kimenet az alábbi:
+
+  1 2 3 4 5
+1 0 1 1 1 1
+2 0 0 2 2 2
+3 0 1 0 3 3
+4 0 0 1 0 4
+5 0 1 2 1 0
+                                      
+#include <stdio.h>
+int main(void)					
+{	
+	int n, i, j;						
+	scanf("%d", &n);					
+	printf("  ");	
+	for (j = 1; j <= n; j = j+1)		
+		printf("%2d", j);	
+	printf("\n");	
+	for (i = 1; i <= n; i = i+1)		
+	{	
+		printf("%2d", i);				
+		for (j = 1; j <= n; j = j+1)	
+			printf("%2d", i % j);		
+		printf("\n");	
+	}	
+	return 0;							
+}	
+/************************************************************/
+                                      
+Írjon C programot, mely egy egész számot (R) olvas be a standard bemenetrõl, majd a standard kimeneten megjelenít egy 10*10 mezõ méretû karakterábrát.
+Az ábra mezõit balról jobbra (x) és fentrõl lefelé (y), 1-tõl kezdve egyesével számozzuk.
+Azon mezõkbe, melyekre x*x+y*y < R*R, a program a # karaktert írja, a többi mezõt a . karakterrel jelölje.
+R=8-ra pl. az alábbi ábra jelenik meg:
+
+#######...
+#######...
+#######...
+######....
+######....
+#####.....
+###.......
+..........
+..........
+..........
+
+#include <stdio.h>
+int main(void)					
+{                                   	
+	int x, y, R;                    	
+	scanf("%d", &R);                	
+	for (y = 1; y <= 10; y = y+1)   	
+	{                               	
+		for (x = 1; x <= 10; x = x+1)
+			if (x*x + y*y < R*R)    	
+				printf("#");        	
+			else                    	
+				printf(".");        	
+		printf("\n");               	
+	}                               	
+	return 0;                       	
+}                                   

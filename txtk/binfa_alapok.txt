@@ -1,0 +1,63 @@
+typedef struct BinFa {
+ 
+   …    /* tetszőleges adat */
+ 
+   struct BinFa *bal, *jobb;
+} BinFa;
+
+BinFa *keres(BinFa *gyoker, int adat) {
+   BinFa *mozgo = gyoker;
+   while (mozgo != NULL && mozgo->adat != adat) {
+      if (adat < mozgo->adat) mozgo = mozgo->bal;
+      else mozgo = mozgo->jobb;
+   }
+   return mozgo;
+}
+
+typedef struct BinFa {
+   int szam;
+   struct BinFa *bal, *jobb;
+} BinFa;
+
+void sorban_kiir(BinFa *gyoker) {
+    if (gyoker == NULL)   /* leállási feltétel */
+       return;
+ 
+    sorban_kiir(gyoker->bal);     /* 1 */
+    printf("%d ", gyoker->adat);     /* 2 */
+    sorban_kiir(gyoker->jobb);    /* 3 */
+}
+
+void felszabadit(BinFa *gyoker) {
+    if (gyoker == NULL)   /* leállási feltétel */
+        return;
+    
+    felszabadit(gyoker->bal);     /* 1 */
+    felszabadit(gyoker->jobb);       /* 2 */
+    free(gyoker);                 /* 3 */
+}
+
+void fajlba_kiir(BinFa *gyoker, FILE *ki) {
+    if (gyoker == NULL)   /* leállási feltétel */
+        return;
+    
+    fprintf(ki, "%d ", gyoker->adat); /* 1 */
+    fajlba_kiir(gyoker->bal, ki);         /* 2 */
+    fajlba_kiir(gyoker->jobb, ki);    /* 3 */
+}
+
+int elemszam(BinFa *gyoker) {
+    if (gyoker == NULL) return 0; /* 1 */
+    
+    return elemszam(gyoker->bal)  /* 2 */
+         + elemszam(gyoker->jobb)    /* 3 */
+         + 1;                     /* 4 */
+}
+
+int szint_elemei(BinFa *gyoker, int szint) {
+    if (gyoker == NULL) return 0;   /* 1 */
+    if (szint == 0) return 1;   /* 2 */
+    
+    return szint_elemei(gyoker->bal,  szint-1)  /* 3 */
+         + szint_elemei(gyoker->jobb, szint-1);
+}

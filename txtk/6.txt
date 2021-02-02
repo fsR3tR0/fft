@@ -1,0 +1,138 @@
+Egy elöl strázsás egyirányban láncolt listában egész értékeket tárolunk nagyság szerint növekvõ sorrendben.
+Definiálja a listaelem típusát!
+Írjon függvényt, mely beilleszt egy paraméterként kapott egész számot egy paraméterként kapott listába!
+Írjon függvényt, mely egy paraméterként kapott nevû szöveges fájlból olvasott elemekkel feltölt egy szintén paraméterként kapott, logikailag üres listát! A függvény a (2) feladat függvényét használja!
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct listaelem	
+{
+	int adat;
+	struct listaelem* kov;
+} listaelem;
+
+
+void beszur_lista(listaelem* lista, int adat)				
+{
+	listaelem *akt;
+	listaelem *uj = (listaelem*)malloc(sizeof(listaelem));	
+	uj->adat = adat;										
+
+	akt = lista;											
+	while(akt->kov!=NULL && akt->kov->adat<adat)			
+		akt = akt->kov;
+
+	uj->kov = akt->kov;										
+	akt->kov = uj;
+}
+
+
+void fajl_olvas(char* fajlnev, listaelem *lista)			
+{
+	FILE* fajl;
+	int fajladat;
+	fajl = fopen(fajlnev,"r");								
+	while(fscanf(fajl,"%d", &fajladat) == 1)				
+		beszur_lista(lista, fajladat);						
+	fclose(fajl);
+}
+
+
+/******************************************************************************/
+Egy elöl strázsás egyirányban láncolt listában legfeljebb 30 értékes betût tartalmazó sztringeket tárolunk.
+Definiálja a listaelem típusát!
+Írjon függvényt, mely beilleszt egy paraméterként kapott sztringet egy paraméterként kapott lista végére!
+Írjon függvényt, mely egy paraméterként kapott nevû szöveges fájl sorait betölti egy paraméterként kapott, logikailag üres listába! Feltételezheti, hogy a fájl minden sora legfeljebb 30 értékes karaktert tartalmaz (az újsor karakterrel együtt).
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+typedef struct listaelem	
+{
+	char adat[30+1];
+	struct listaelem* kov;
+} listaelem;
+
+
+
+void beszur_lista_hatra(listaelem* lista, char* adat)	
+{
+	listaelem *uj = (listaelem*)malloc(sizeof(listaelem));
+	listaelem *akt = lista;
+	while(akt->kov!=NULL) 							
+		akt = akt->kov;
+	strcpy(uj->adat, adat);							
+	uj->kov = akt->kov;								
+	akt->kov = uj;
+}
+
+
+void fajl_olvas(char* fajlnev, listaelem *lista)	
+{
+	FILE* fajl;
+	char fajladat[30+1];
+	fajl = fopen(fajlnev,"r");						
+
+	while(fscanf(fajl,"%s", fajladat) == 1)			
+			beszur_lista_hatra(lista, fajladat);	
+
+	fclose(fajl);
+}
+
+
+
+/******************************************************************************/
+Egy elöl strázsás egyirányban láncolt listában valós számokat tárolunk.
+Definiálja a listaelem típusát!
+Írjon függvényt, mely beilleszt egy paraméterként kapott valós számot egy paraméterként kapott lista elejére!
+Írjon függvényt, mely beilleszt egy paraméterként kapott valós számot egy paraméterként kapott lista végére!
+Írjon függvényt, mely egy paraméterként kapott nevû szöveges fájlból olvasott számokkal feltölt egy paraméterként kapott, logikailag üres listát. A függvény a negatív számokat a lista elejére, a pozitívakat a lista végére szúrja.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct listaelem	
+{
+	double adat;
+	struct listaelem* kov;
+} listaelem;
+
+
+void beszur_lista_elore(listaelem* lista, int adat)	
+{
+	listaelem *uj = (listaelem*)malloc(sizeof(listaelem));
+	uj->adat = adat;								
+	uj->kov = lista->kov;							
+	lista->kov = uj;
+}
+
+void beszur_lista_hatra(listaelem* lista, int adat)
+{
+	listaelem *uj = (listaelem*)malloc(sizeof(listaelem));	
+	listaelem *akt = lista;
+	while(akt->kov!=NULL) 							
+		akt = akt->kov;
+	uj->adat = adat;
+	uj->kov = NULL;
+	akt->kov = uj;
+}
+
+
+void fajl_olvas(char* fajlnev, listaelem *lista)	
+{
+	FILE* fajl;
+	double fajladat;
+	fajl = fopen(fajlnev,"r");						
+
+	while(fscanf(fajl,"%lf", &fajladat) == 1)		
+	{
+		if(fajladat>0)
+			beszur_lista_hatra(lista, fajladat);	
+		else
+			beszur_lista_elore(lista, fajladat);
+	}
+
+	fclose(fajl);
+}

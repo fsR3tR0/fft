@@ -1,0 +1,20 @@
+bool prim_e(int szam) {
+    for (int oszto = 2; oszto <= szam/2; oszto++)
+        if (szam % oszto == 0)
+            return false;
+    return true;
+}
+ 
+int main(void) {
+    int vizsgalt = 2;
+    int db = 0;
+    while (db < 20) {
+        if (prim_e(vizsgalt)) {
+            printf("%d ", vizsgalt);
+            db++;
+        }
+        vizsgalt++;
+    }
+    
+    return 0;
+}

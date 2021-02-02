@@ -1,0 +1,254 @@
+typedef struct ListaElem {
+ 
+   … /* tetszőleges adat(ok) */
+ 
+   struct ListaElem *kov;
+} ListaElem;
+
+ListaElem *mozgo;
+ 
+for (mozgo = eleje; mozgo != NULL; mozgo = mozgo->kov)
+    printf("%d", mozgo->szam);
+
+Ne feledjük: eleje->kov ugyanazt jelenti, mint (*eleje).kov. Az eleje pointer által 
+mutatott struktúra kov adattagja. A -> nyíl operátort azért találták ki, hogy ne kelljen 
+mindig zárójelezni az ilyen kifejezéseket. De ez nagyon kényelmes is: a nyíl emlékeztet a
+pointerre!
+
+ListaElem *uj;
+uj = (ListaElem*) malloc(sizeof(ListaElem)); /* 1 */
+uj->kov = eleje; /* 2 */
+eleje = uj; /* 3
+
+ListaElem *eleje = NULL;
+eleje = elore_beszur(eleje, 2); /* !
+
+ListaElem *elore_beszur(ListaElem *eleje, int adat) {
+   ListaElem *uj;
+   uj = (ListaElem*) malloc(sizeof(ListaElem));
+   uj->adat = adat;
+   uj->kov = eleje;
+   return uj;       /* ! */
+
+A lista elejére kerül az új elem, ezért pont annak a 
+címével tér vissza. Ha nem tároljuk el az új címet, 
+akkor az elem elvész! Ezért a visszatérési értékét 
+eldobni, nem eltárolni az eleje változóban, nagyon súlyos hiba!
+
+ListaElem *uj;
+uj = (ListaElem*) malloc(sizeof(ListaElem)); /* 1 */
+uj->adat = /* ... */;
+ 
+ListaElem *mozgo = eleje;
+while (mozgo->kov != NULL)                   /* 2 */
+    mozgo = mozgo->kov;
+mozgo->kov = uj;                             /* 3 */
+uj->kov = NULL; 
+
+
+ListaElem *uj;
+uj = (ListaElem*) malloc(sizeof(ListaElem));
+uj->adat = /* ... */;
+uj->kov = NULL;
+ 
+if (eleje == NULL) {
+   /* üres listánál ez lesz az első elem */
+   eleje = uj;
+} else {
+   /* ha nem üres a lista, az utolsó után fűzzük */
+   ListaElem *mozgo = eleje;
+   while (mozgo->kov != NULL)
+      mozgo = mozgo->kov;
+   mozgo->kov = uj;
+}
+
+ListaElem *eleje = /* ... */;
+ListaElem *vege = /* ... */;
+ 
+/* az új elem létrehozása */
+ListaElem *uj;
+uj = (ListaElem*) malloc(sizeof(ListaElem));
+uj->adat = /* ... */;
+uj->kov = NULL;
+ 
+/* hozzáfűzés */
+if (eleje == NULL) {
+    eleje = uj;
+    vege = uj;
+} else {
+    vege->kov = uj;
+    vege = uj;
+}
+
+
+//felszabaditas
+iter = eleje;
+while (iter != NULL) {
+    ListaElem *kov = iter->kov; /* következő elem */
+    free(iter);
+    iter = kov;
+}
+
+//Mondatok – adatszerkezet választása
+typedef struct SzoLista {
+    char *szo;
+    struct SzoLista *kov;
+} SzoLista;
+
+SzoLista *ujegyszavas(char const *szo) {
+    SzoLista *uj;
+    uj = (SzoLista*) malloc(sizeof(SzoLista));
+    uj->kov = NULL;
+    uj->szo = (char*) malloc(sizeof(char)*(strlen(szo)+1));
+    strcpy(uj->szo, szo);
+ 
+    return uj;
+}
+
+//elem torles
+
+lemarado = NULL;
+mozgo = eleje;
+while (mozgo != NULL && mozgo->adat != mit) {
+    lemarado = mozgo;
+    mozgo = mozgo->kov;
+}
+
+lemarado->kov = mozgo->kov; /* törlendő = ahol megállt */
+free(mozgo);
+
+/* törlendő elem keresése */
+ListaElem *lemarado = NULL;
+ListaElem *mozgo = eleje;
+while (mozgo != NULL && mozgo->adat != /* ... */) {
+    lemarado = mozgo;
+    mozgo = mozgo->kov;
+}
+ 
+/* megtalált elem törlése */
+if (mozgo == NULL) {           /* nincs ilyen elem */
+    /* nincs teendő */
+} else if (lemarado == NULL) { /* az első elemet kell törölni */
+    ListaElem *ujeleje = mozgo->kov;
+    free(mozgo);
+    eleje = ujeleje;
+} else {                       /* a közepéről/végéről törlünk */
+    lemarado->kov = mozgo->kov;
+    free(mozgo);
+}
+
+//rendezve epites
+Gyakran van szükség arra, hogy rendezetten tároljunk adatokat.
+
+A tömböknél az adatok rendezett rögzítése nagyon költséges, hiszen mindig odébb kell csúsztatni a beszúrási pozíció utáni elemeket.
+Listákat könnyű rendezve építeni, hiszen csak a mutatókat kell megfelelően beállítani.
+Tömbök esetén egy új elemet mindig a meglévő adatok után szúrunk be és utána rendezünk, listáknál pedig eleve rendezetten építünk és így ott nincs szükség utólagos rendezésre. Ez jó, mert az utólagos rendezés a listáknál még kevésbé hatékony, mint tömböknél.
+
+Beszúrás egy rendezett listába:
+
+Az első elemre állunk a „mozgó” pointerrel.
+Amíg az aktuális elem kisebb, mint a beszúrandó, és nem értük el a lista végét, addig mindig továbblépünk a következőre.
+A megtalált elem elé beszúrjuk az újat. Látjuk az előzőt?
+
+A beszúrás folyamata a lemaradó pointeres keresés után: a „lemaradó” pointerét átállítjuk az új elemre, az új elem pointerét átállítjuk a „mozgó”-ra.
+/* hely keresése */
+ListaElem *lemarado = NULL;
+ListaElem *mozgo = eleje;
+while (mozgo != NULL && mozgo->adat < uj->adat) { /* hely? */
+    lemarado = mozgo;
+    mozgo = mozgo->kov;
+}
+ 
+/* beszúrás */
+if (lemarado == NULL) {   /* üres vagy első elé? */
+    uj->kov = eleje;
+    eleje = uj;
+} else {
+    lemarado->kov = uj;   /* lista belsejébe/végére */
+    uj->kov = mozgo;
+}
+
+//duplan lancolt, strazsa
+typedef struct ListaElem {
+    …
+ 
+    struct ListaElem *elozo, *kov;
+} ListaElem;
+
+
+typedef struct Lista {
+    ListaElem *elso;
+    ListaElem *utolso;
+} Lista;
+/* kiírja a listában található számokat */
+ListaElem *mozgo = lista->elso->kov;  /* 1 */
+while (mozgo != lista->utolso) {  /* 2 */
+    printf("%d ", mozgo->adat);
+    mozgo = mozgo->kov;
+}
+//torles
+
+ListaElem *mozgo = lista->elso->kov;
+while (mozgo != lista->utolso && mozgo->adat != adat) {
+    mozgo = mozgo->kov;
+}
+ 
+if (mozgo != lista->utolso) { /* megvan? */
+    ListaElem *torlendo = mozgo;
+    torlendo->elozo->kov = torlendo->kov;
+    torlendo->kov->elozo = torlendo->elozo;
+    free(torlendo);
+}
+
+Duplán láncolt lista: rendezve beszúrás
+
+ListaElem *mozgo = lista->elso->kov;
+while (mozgo != lista->utolso && mozgo->adat < adat)
+    mozgo = mozgo->kov;
+ 
+uj->elozo = mozgo->elozo;  /* ő a szomszédaira mutat */
+uj->kov = mozgo;
+mozgo->elozo->kov = uj;    /* a szomszédai rá */
+mozgo->elozo = uj;
+
+//				pelda
+Egyenetlen terhelések, illetve eltérő sebességű folyamatok kiegyenlítésére szokás használni ún. pufferként várakozási sorokat (queue, FIFO – first in, first out). Nagy terhelés esetén a kérések a sor elejéhez adódnak hozzá, a kiszolgáló pedig a végéről veszi el őket, tehát a legrébben érkezett fog a legkorábban sorra kerülni. Ilyen módon nem veszik el egy kérés sem, hiszen a lista dinamikusan növeszik vagy csökken attól függően, hogy éppen a termelő vagy a fogyasztó oldal dolgozik gyorsabban.
+
+Várakozási sort egyszeresen láncolt listával érdemes megvalósítani, amelynek nem csak az elejére, hanem a végére mutató pointert is eltároljuk. Így könnyű a végére beszúrni egy elemet: mert az utolsó után fűzzük, és a vége pointert az új elemre állítjuk. Illetve könnyű az elejéről is elvenni egyet: az eleje pointert a másodikra állítjuk, az első pedig az, amit épp kiveszünk.
+
+
+Példa: egy szerverre időben egyenetlenül elosztva érkeznek be a kérések. Előfordulnak üresjáratok és olyan időszakok, amikor nem tudja olyan sebességgel kiszolgálni a kéréseket, ahogy beérkeznek. Másik példa: a nyomtatási sor a számítógépen. A kinyomtatandó oldalakat megjegyzi a gép, és olyan sorrendben küldi a nyomtatónak, ahogyan azok eredetileg a felhasználó által ki lettek nyomtatva.
+
+A verem (stack, LIFO – last in, first out) olyan lineáris adatszerkezet, amelyben új elemet az elejéhez adunk hozzá (push), és a feldolgozandókat is az elejéről vesszük el (pop). Verem megvalósítása legegyszerűbben egyszeresen láncolt listával lehetséges, amelybe az új elemeket a lista elején tesszük, és a kivett elemek is a lista elejéről származnak.
+
+A verem használható például matematikai kifejezések kiértékelésekor átmeneti tárolónak, és általában olyan algoritmusokban, ahol az adatok feldolgozása azok érkezésének fordított sorrendjében történik.
+
+
+fésűs lista (listák listája)
+
+ciklikus lista
+A fésűs lista egy olyan láncolt lista, amelynek elemei láncolt listák. Olyan esetben, amikor az adatok kétszintű hierarchiában helyezkednek el, érdemes fésűs listát használni – főként, ha mindkét szinten rendezett tárolást szeretnénk.
+
+Példa: egy nyelviskola tanulói – a főlista (sárga) egy eleme egy kurzus (pl. „holland haladó”, „hindi kezdő” stb.). Minden óra tartalmaz egy listát (kék), amelynek elemei a kurzuson résztvevő hallgatók.
+
+A ciklikus lista olyan lista, amelyben az „utolsó” elem után újból az első következik (vagyis az utolsó elem „következő” pointere az elsőre mutat).
+
+Példák:
+
+Futó programok listája egy operációs rendszerben. Ha foglalkozott az utolsóval, akkor utána megint az elsővel.
+Sokszög csúcspontjai: az utolsó után az első jön, az első előtt az utolsó.
+Érdekes egy ciklikus lista bejárása. Mivel nem mehetünk NULL pointerig (nincs vége a listának), addig kell futnia a ciklusnak, amíg el nem érjük a lista elejét. Egy ilyen feltétel azonban a lista elején is teljesülne. Ahogy leírjuk ezt, egyből észbe is kapunk:
+
+for (iter = eleje; iter != eleje; iter = iter->kov)
+Ehelyett például egy hátultesztelő ciklust alkalmazhatunk, hogy biztosítsuk, lefusson legalább egyszer a ciklustörzs, és a feltétel már a második elemet lássa elsőnek. Ekkor azonban az üres listára külön figyelnünk kell bejáráskor is:
+
+if (eleje == NULL) {
+    printf("üres a lista!\n");
+} else {
+    iter = eleje;
+    do {
+        …
+        iter = iter->next;
+    } while (iter != eleje);
+}
+

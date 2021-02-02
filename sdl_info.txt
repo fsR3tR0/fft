@@ -1,0 +1,6 @@
+telepites:
+	apt-get install libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev -y
+sdl2_config:
+	kiirja mi kell a forditashoz a terminalbol
+forditashoz:
+	-o filenev utan `sdl2-config --cflags --libs` -lSDL2_gfx -lSDL2_ttf -lSDL2_image -lSDL2_mixer

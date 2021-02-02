@@ -1,0 +1,276 @@
+Írjon függvényt, mely paraméterként egy egészeket tartalmazó tömböt kap, és visszaad két értéket:
+a tömb legkisebb és legnagyobb elemét!
+Írjon függvényt, mely a standard inputról 1000 egész számot olvas be!
+A függvény a beolvasott számok közül a pozitívakat írja be egy tömbbe (a tömb elejétõl kezdve).
+A függvény a tömböt paraméterként kapja meg, visszatérési értéke pedig a beírt elemek 
+darabszáma legyen!
+Egészítse ki a fentieket teljes programmá, melyben létrehoz egy megfelelõ méretû tömböt, 
+a 2. feladat függvényével feltölti azt, majd az 1. feladat függvénnyével meghatározza a tömb 
+szélsõ értékeit. Végül írja ki azokat a standard outputra!
+
+#include <stdio.h>
+
+void minmax(int t[], int n, int *min, int *max)	
+{										
+	int mn = t[0], mx = t[0], i;		
+	for (i = 1; i < n; ++i) {           
+		if (t[i] < mn) mn = t[i];       
+		if (t[i] > mx) mx = t[i];       
+	}                                   
+	*min = mn;							
+	*max = mx;                          
+}                                       
+                                        
+int beolvas(int t[])					
+{                                       
+	int i, n = 0;                       
+	for (i = 0; i < 1000; ++i) {        
+		int d;                          
+		scanf("%d", &d);                
+		if (d > 0)                      
+			t[n++] = d;					
+	}                                   
+	return n;                           
+}                                       
+                                        
+int main_a(void)                        
+{                                       
+	int a[1000], N, min, max;           
+	N = beolvas(a);						
+	minmax(a, N, &min, &max);           
+	printf("%d %d\n", min, max);
+	return 0;
+}
+
+/*****************************************************************/
+Írjon függvényt, mely paraméterként egy C-sztringet kap, és visszaad két értéket: a sztringben
+tárolt 'a' és 'b' karakterek darabszámait!
+Írjon függvényt, mely a standard inputról 300 karaktert olvas be, és ezek közül az angol ábécé
+kisbetûit beírja egy paraméterként kapott sztringbe! Feltételezheti, hogy a sztring minimum 
+300 értékes karakter tárolására alkalmas.
+Egészítse ki a fentieket teljes programmá, melyben létrehoz egy megfelelõ méretû sztringet, 
+a beolvasó  függvénnyel feltölti azt, majd az 1. feladat függvénnyével meghatározza az 'a' 
+és 'b' karakterek számát. Végül a két eredményt kiírja ki a standard outputra!
+
+#include <stdio.h>
+
+void ab(char *str, int *pa, int *pb)	
+{                                       
+	int a = 0, b = 0;                   
+	while (*str != '\0') {              
+		if (*str == 'a')                
+			a++;                        
+		if (*str == 'b')                
+			b++;                        
+		++str;                          
+	}                                   
+	*pa = a;                            
+	*pb = b;                            
+}                                       
+                                        
+void kisbetuolvas(char *str)            
+{                                       
+	char c;                             
+	int i, n = 0;                       
+	for (i = 0; i < 300; ++i) {         
+		scanf("%c", &c);                
+		if (c >= 'a' && c <= 'z')       
+			str[n++] = c;               
+	}                                   
+	str[n] = '\0';                      
+}                                       
+                                        
+int main_b(void)                        
+{
+	char text[300+1];
+	int a, b;
+	kisbetuolvas(text);					
+	ab(text, &a, &b);					
+	puts(text);
+	printf("%d a, %d b\n", a, b);
+	return 0;
+}
+
+/****************************************************************************/
+Írjon függvényt, mely paraméterként egy C-sztringet kap, és kiszámol két értéket: a sztringben 
+tárolt kis- és nagybetûk darabszámait.
+Írjon függvényt, mely a standard inputról karaktereket olvas mindaddig, míg a '\#' karakter 
+be nem érkezik.
+A függvény töltse a beolvasott karaktereket (a '\#' karaktert már ne) egy paraméterként kapott 
+sztringbe.
+Feltételezheti, hogy a paraméterként kapott sztring megfelelõ számú karakter tárolására képes.
+Gondoskodjon a sztring lezárásáról.
+Egészítse ki a fentieket teljes programmá, mely létrehoz egy max. 100 értékes karaktert 
+tárolni képes sztringet, feltölti azt a (2) beolvasó függvénnyel, majd az (1) függvénnyel 
+meghatározza a kis- és nagybetûk számát. végül ezt a két értéket írja ki a standard outputra!
+
+#include <stdio.h>
+
+void beolvas(char *str)					
+{                                       
+	char c;                             
+	scanf("%c", &c);                    
+	while (c != '#') {                  
+		*str = c;                       
+		str++;                          
+		scanf("%c", &c);                
+	}                                   
+	*str = '\0';                        
+}                                       
+                                        
+void ab(char *str, int *na, int *nb)    
+{                                       
+	int a = 0, b = 0;                   
+	while (*str != '\0') {              
+		if (*str == 'a') a++;           
+		if (*str == 'b') b++;           
+		str++;                          
+	}                                   
+	*na = a;                            
+	*nb = b;                            
+}                                       
+                                        
+int main_a(void)                        
+{                                       
+	char text[100+1];                   
+	int kis, nagy;
+	hashig(text);						
+	kisnagy(text, &kis, &nagy);
+	printf("%d kicsi, %d nagy\n", kis, nagy);
+	return 0;
+}
+
+/**********************************************************/
+Írjon függvényt, mely paraméterként egy C-sztringet kap, és kiszámol két értéket: a sztringben 
+tárolt számjegyek és szóközök darabszámait.
+Írjon függvényt, mely a standard inputról karaktereket olvas mindaddig, míg a '@' karakter 
+be nem érkezik.
+A függvény töltse a beolvasott karaktereket (a '@' karaktert már ne) egy sztringbe, melyet 
+paraméterként kap.
+Feltételezheti, hogy a paraméterként kapott sztring megfelelõ számú karakter tárolására képes.
+Gondoskodjon a sztring lezárásáról.
+Egészítse ki a fentieket teljes programmá, mely létrehoz egy max. 100 értékes karaktert 
+tárolni képes sztringet, feltölti azt a (2) beolvasó függvénnyel, majd az (1) függvénnyel 
+meghatározza a számjegyek és szóközök számát. Végül ezt a két értéket írja ki a standard 
+outputra!
+
+#include <stdio.h>
+
+void kukacig(char *str)					
+{                                       
+	char c;                             
+	scanf("%c", &c);                    
+	while (c != '@') {                  
+		*str = c;                       
+		str++;                          
+		scanf("%c", &c);                
+	}                                   
+	*str = '\0';                        
+}                                       
+                                        
+void szamol(char *str, int *d, int *sp) 
+{                                       
+	int nd = 0, nsp = 0;                
+	while (*str != '\0') {              
+		if (*str == ' ')                
+			nsp++;                      
+		if (*str >= '0' && *str <= '9') 
+			nd++;                       
+		++str;                          
+	}                                   
+	*d = nd;                            
+	*sp = nsp;                          
+}                                       
+                                        
+                                        
+int main_b(void)                        
+{                                       
+	char text[100+1];
+	int nd, nsp;
+	kukacig(text);						
+	szamol(text, &nd, &nsp);
+	printf("%d szokoz, %d szamjegy\n", nsp, nd);
+	return 0;
+}
+
+/**********************************************************/
+Írjon függvényt, mely egy paraméterként kapott C-sztringet megfordít. A függvény az eredeti 
+sztringen dolgozzon.
+Írjon függvényt, mely egy sztringet feltölt az angol ábécé elsõ $n$ kisbetûjével.
+Feltételezheti, hogy a sztring megfelelõ karakter tárolására képes.
+Foglalja a fentieket programba, melyben létrehoz egy 20 betû tárolására képes sztringet, 
+feltölti a (2) függvénnyel, megfordítja, majd kiírja a standard outputra.
+
+#include <stdio.h>
+
+void str_reverse(char *str)				
+{                                       
+	char *end;                          
+	for (end = str; *end != '\0'; ++end)
+		;                               
+	--end;                              
+	while (str < end) {                 
+		char c = *end;                  
+		*end = *str;                     
+		*str = c;                       
+		++str;                          
+		--end;                          
+	}                                   
+}                                       
+                                        
+void fill(char *str, int n)             
+{   
+	int i;
+	for(i=0; i<n; i++)					
+		str[i] = 'a' + i;
+		
+	str[i] = '\0';                     	
+}                                           
+
+int main_a(void)
+{
+	char text[21];		
+	fill(text, 20);						
+	str_reverse(text);				
+	printf("%s", text);
+	return 0;
+}
+
+/**********************************************************/
+Írjon függvényt (kiegyenlit), mely egy paraméterként kapott valós tömbben minden elemet az 
+átlag értékére módosít.
+Írjon függvényt, mely egy $n$ elemû tömböt kap, és azt feltölti az elsõ $n$ négyzetszámmal.
+Foglalja a fentieket programba, melyben létrehoz egy 10 elemû tömböt, feltölti a (2) függvény 
+segítségével, kiegyenlíti az (1) függvénnyel, majd kiírja a standard outputra.
+
+#include <stdio.h>
+
+void kiegyenlit(double t[], int n)	
+{
+	double m = 0.0;
+	int i;
+	for (i = 0; i < n; ++i)			
+		m += t[i];
+	m /= n;
+	
+	for (i = 0; i < n; ++i)			
+		t[i] = m;
+}
+
+void fill(double tomb[], int n)		
+{
+	int i;
+	for(i=1; i<=n; i++)				
+		tomb[i] = i*i;
+}
+
+int main_b(void)
+{
+	int i;
+	double tomb[10];				
+	fill(tomb, 10);					
+	kiegyenlit(tomb, 10);
+	for (i = 0; i <10; ++i)			
+		printf("%f\n", tomb[i]);
+	return 0;
+}

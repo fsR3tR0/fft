@@ -1,0 +1,130 @@
+Írjon függvényt, mely paraméterként egy valósakat tartalmazó tömböt kap, és visszaad egy másik, dinamikusan foglalt tömböt, mely az
+ eredeti tömb átlagnál kisebb elemeit tartalmazza!
+Egészítse ki a függvényt teljes programmá, melyben létrehoz egy tömböt, átadja azt a függvénynek, és kiírja a 
+függvény által visszaadott tömb elemeit a standard kimenetre. Gondoskodjon a dinamikusan foglalt terület felszabadításáról is!
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int* atlkisebbek(int t[], int m, int*ujm)		
+{                                               
+	int i, j, kisebbdb = 0;                     
+	int *ujt;                                   
+	double sum = 0;                             
+	double atl;                                 
+	for (i = 0; i < m; i++)                     
+		sum += t[i];                            
+	atl = sum / m;                              
+                                                
+	for (i = 0; i < m; i++)                     
+		if (t[i] < atl) kisebbdb++;             
+                                                
+	ujt = (int*)malloc(kisebbdb*sizeof(int));   
+                                                
+	j = 0;                                      
+	for (i = 0; i < m; i++)                     
+		if (t[i] < atl)                         
+		{                                       
+			ujt[j] = t[i];                      
+			j++;                                
+		}                                       
+	*ujm = kisebbdb;                            
+	return ujt;                                 
+}                                               
+                                                
+int main_a(void)                                
+{                                                       
+	int t[] = { 1, 2, 37, 11, 6, 51, 36, 8, 17, 28 };   
+	int i, m = 10;                                     
+	int ujm;
+	int *ujt = atlkisebbek(t, m, &ujm);					
+                                                       
+	for (i = 0; i < ujm; i++)                          
+	{                                                  
+		printf("%d,\t", ujt[i]);                       
+	}                                                  
+	printf("\n");                                      
+                                                       
+	free(ujt);                                         
+	return 0;
+}
+
+/*******************************************************************************/
+Írjon függvényt, mely paraméterként egy sztringet kap, és visszaad egy másik, dinamikusan foglalt sztringet, mely az eredeti sztring elsõ szavát tartalmazza! A visszaadott sztringnek pontosan annyi memóriát foglaljon, mint ami szükséges!
+Egészítse ki a függvényt teljes programmá, melyben létrehoz egy sztringet, átadja azt a függvénynek, és kiírja a függvény által visszaadott sztringet a standard kimenetre. Gondoskodjon a dinamikusan foglalt terület felszabadításáról is!
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+char* elsoszo(char *szoveg)								
+{                                                       
+	int i=0,  chardb = 0;                               
+	char *ujstr;                                        
+                                                        
+	while ((szoveg[i] != '\0') && (szoveg[i] != ' '))   
+		i++;                                            
+	chardb = i;                                         
+                                                        
+	ujstr = (int*)malloc((chardb+1)*sizeof(char));      
+                                                        
+	for (i = 0; i < chardb; i++)                        
+		ujstr[i] = szoveg[i];                           
+	ujstr[chardb] = '\0';                               
+                                                        
+	return ujstr;                                       
+}                                                       
+                                                        
+int main_a(void)                                        
+{                                                       
+	char *str = "Ez a ZH-m is 10 pontos lesz.";         
+	char*ujstr = elsoszo(str);                          
+	                                                    
+	printf("%s\n", ujstr);                              
+                                                        
+	free(ujstr);                                        
+	return 0;                                           
+}                                                       
+
+/*******************************************************************/
+Írjon függvényt, mely paraméterként egy egészeket tartalmazó tömböt kap, és visszaad egy másik, dinamikusan foglalt tömböt, mely az eredeti tömb elsõ k olyan elemét tartalmazza, melyek még monoton növekvõ sorozatot alkotnak, de az elsõ k+1 elem már nem! Ha pl. az eredeti tömb elemei 1, 2, 4, 3, 5, akkor k = 3.
+Egészítse ki a függvényt teljes programmá, melyben létrehoz egy tömböt, átadja azt a függvénynek, és kiírja a függvény által visszaadott tömb elemeit a standard kimenetre. Gondoskodjon a dinamikusan foglalt terület felszabadításáról is!
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int* monotonnovekvo(int t[], int m, int*ujm)		
+{
+	int i, novodb = 0;
+	int *ujt;										
+
+	for (i = 0; i < m-1; i++)						
+		if(t[i+1]<t[i]) break;
+	novodb = i + 1;
+
+	ujt = (int*)malloc(novodb*sizeof(int));			
+
+	for (i = 0; i < novodb; i++)					
+		ujt[i] = t[i];
+
+	*ujm = novodb;									
+	return ujt;										
+}
+
+int main_a(void)
+{
+	int t[] = { 1, 2, 4, 3, 5 };
+	int i, m = 5;
+	int ujm;
+	int *ujt = monotonnovekvo(t, m, &ujm);			
+
+	for (i = 0; i < ujm; i++)						
+	{
+		printf("%d,\t", ujt[i]);
+	}
+	printf("\n");
+
+	free(ujt);										
+	return 0;
+}
+                                                        

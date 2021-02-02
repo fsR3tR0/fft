@@ -1,0 +1,24 @@
+apt-get install build-essential
+gcc programneve.c -o programneve (ez a forditas, barminek elnevezhetjuk)
+./aletrejottallomanyfuttatas
+
+c++-hoz:
+	g++ fileneve.cpp -o milegyenaneve
+
+//system.h:
+
+header-hoz:
+	#ifndef HEADERNEVE_H_
+	#define HEDERNEVE_H_
+
+	#endif 
+
+argumentum:
+	int main(int argc, char *argv[])
+	futtataskor bemeneti parametereket adhatunk a programunknak
+		./main.c anyad.txt "zsakfos"
+	argc: megadja a szamat a bemeneti parametereknek	
+	argv: a parameterek tarolasa
+		a 0. elem mindig a program neve, az utolso pedig mindig 
+		nullara mutat(itt pl egy 4 elemu tomb, argv[3] = NULL)
+	stringben kapja a bemeneti parametereket

@@ -1,0 +1,244 @@
+Definiáljon adattípust három oldalhosszával megadott téglatest tárolására!
+Írjon függvényt, melynek visszatérési értéke egy téglatest. A függvény a téglatest 
+szóközökkel elválasztott adatait a standard inputról olvassa be!
+Írjon függvényt egy téglatest térfogatának számítására!
+Írjon teljes programot, mely a fenti függvényeket használva a standard inputról feltölt egy 
+100 elemû téglatest-tömböt, majd kiírja a standard outputra az utolsó olyan téglatest 
+tömbbeli indexét, melynek térfogata nem éri el a 2.3 értéket!
+
+#include <stdio.h>
+
+typedef struct { double a, b, c; } brick;
+                                          
+brick read_brick(void)                    
+{                                         
+	brick b;                              
+	scanf("%lf%lf%lf", &b.a, &b.b, &b.c); 
+	return b;                             
+}                                         
+                                          
+double volume(brick b)                    
+{                                         
+	return b.a * b.b * b.c;               
+}                                         
+                                          
+int main_a(void)                          
+{                                         
+	brick bricks[100];                    
+	int i;                                
+	for (i = 0; i < 100; ++i)             
+		bricks[i] = read_brick();         
+	for (i = 100-1; i >= 0 &&             
+		volume(bricks[i]) >= 2.3; --i);   
+	if (i >= 0)
+		printf("%d", i);
+	else
+		printf("nincs ilyen");
+	return 0;
+}
+
+/*****************************************************************/
+Definiáljon adattípust egy darabszámmal (elõjel nélküli egész), nettó egységárral (valós) és 
+ÁFA-kulccsal (valós) meghatározott webáruházi rendelési tétel tárolására!
+Írjon függvényt, mely egy rendelési tételt ad vissza, melynek szóközökkel elválasztott 
+adatait a standard inputról olvassa be (az adatok a fent megadott sorrendben követik egymást)!
+Írjon függvényt egyetlen rendelési tétel bruttó értékének számítására (vegye figyelembe a 
+mennyiséget és az ÁFÁ-t is)!
+Írjon teljes programot, mely a fenti függvényeket használva a standard inputról feltölt egy 
+100 elemû rendelési tételtömböt, majd kiírja a standard outputra a rendelések bruttó összértékét!
+
+#include <stdio.h>
+
+typedef struct {							
+	int db;                                 
+	double ar;                              
+	double AFA;                             
+} rendeles;                                 
+                                            
+rendeles rendeles_beolvas(void)             
+{                                           
+	rendeles r;                             
+	scanf("%d%lf%lf", &r.db, &r.ar, &r.AFA);
+	return r;                               
+}                                           
+                                            
+double brutto_ar(rendeles r)                
+{                                           
+	return r.db * r.ar * (1.+r.AFA);        
+}                                           
+                                            
+int main_b(void)                            
+{                                           
+	int i;                                  
+	double ar = 0.0;                        
+	rendeles rendelesek[100];               
+	for (i = 0; i < 100; ++i)               
+	{                                       
+		rendelesek[i] = rendeles_beolvas(); 
+		ar += brutto_ar(rendelesek[i]);		
+	}
+	printf("%f", ar);
+	return 0;
+}
+
+/*****************************************************************/
+Definiáljon adattípust számlálójával és nevezõjével megadott racionális szám tárolására!
+Írjon függvényt, melynek visszatérési értéke egy racionális szám. A függvény a 
+szóközökkel elválasztott számlálót és nevezõt a standard inputról olvassa be!
+Írjon függvényt, mely egy racionális szám és egy egész szám hányadosát számolja ki és 
+azt racionális számként visszaadja!
+Írjon teljes programot, mely a fenti függvényeket használva a standard inputról feltölt 
+egy 100 elemû racionális tömböt, majd beolvas egy egész értéket! A program módosítsa 
+a tömb elemeit úgy, hogy azok az eredeti elem és az egész szám hányadosára változzanak. 
+(A racionális számok egyszerûsítésével nem kell foglalkoznia.)
+
+#include <stdio.h>
+
+typedef struct { int num, den; } rat;	
+                                        
+rat read(void)                          
+{                                       
+	rat r;                              
+	scanf("%d%d", &r.num, &r.den);      
+	return r;                           
+}                                       
+                                        
+rat divide(rat r, int d)                
+{                                       
+	r.den *= d;                         
+	return r;                           
+}                                       
+                                        
+int main_a(void)                        
+{                                       
+	rat rats[100];                      
+	int d, i;                           
+	for (i = 0; i < 100; ++i)			
+		rats[i] = read();
+	scanf("%d", &d);
+	for (i = 0; i < 100; ++i)
+		rats[i] = divide(rats[i], d);	
+	return 0;
+}
+
+/*****************************************************************/
+Definiáljon adattípust három oldalhosszával megadott háromszög tárolására!
+Írjon függvényt, melynek visszatérési értéke egy háromszög. A függvény a 
+háromszög whitespace karakterekkel elválasztott adatait a standard 
+inputról olvassa be!
+Írjon függvényt, mely egy háromszögrõl megállapítja, hogy az valódi-e 
+(Az 1;2;12 ,,háromszög'' pl. nem az) !
+Írjon teljes programot a fenti függvényeket használva, mely a standard 
+inputról addig olvas háromszögeket, míg teljesen fel nem tölt egy 100 
+valódi háromszöget tartalmazó tömböt!
+
+#include <stdio.h>
+
+typedef struct { double a, b, c; } triangle;	
+                                                
+triangle read_triangle(void)                    
+{                                               
+	triangle t;                                 
+	scanf("%lf%lf%lf", &t.a, &t.b, &t.c);       
+	return t;                                   
+}                                               
+                                                
+int is_triangle(triangle t)                     
+{                                               
+	return (t.a+t.b>t.c) && (t.b+t.c>t.a) &&	
+		(t.c+t.a>t.b);
+}                                               
+                                                
+int main_b(void)                                
+{                                               
+	triangle triangles[100];                    
+	int i = 0;                                  
+	while (i < 100) {                           
+		triangle t = read_triangle();           
+		if (is_triangle(t))                     
+			triangles[i++] = t;                 
+	}                                           
+	return 0;                                   
+}
+
+/*****************************************************************/
+Definiáljon adattípust, mely egy ingatlan értékét és tulajdonosainak számát tárolja!
+Írjon függvényt, melynek visszatérési értéke egy ingatlan. A függvény az igatlan 
+whitespace karakterekkel elválasztott paramétereit a standard inputról olvassa be!
+Írjon függvényt, mely egyenletes részesedési arányokat feltételezve meghatározza, 
+és visszaadja egy ingatlan egy tulajdonosra vetített értékét.
+Írjon teljes programot, mely a fenti függvények alkalmazásával feltölt a standard 
+inputról egy 20 elemû ingatlantömbõt. A tömb minden elemének résztulajdonosai 
+vagyunk. A program írja ki a standard kimenetre, hogy a tömb elejérõl indulva 
+hány ingatlant kell eladnunk ahhoz, hogy összes ingatlanvagyonunk ne haladja 
+meg a százmillió forintot!
+
+#include <stdio.h>
+
+typedef struct { int ar, tulaj; } Ingatlan;		
+
+Ingatlan beolvas(void)							
+{
+	Ingatlan ing;
+	scanf("%d%d", &ing.ar, &ing.tulaj);
+	return ing;									
+}
+
+int ertek(Ingatlan ing)							
+{
+	return ing.ar/ing.tulaj;					
+}
+
+int main_a(void)
+{
+	int sum = 0, i;
+	Ingatlan ing[20];							
+	for (i = 0; i < 20; ++i)					
+		ing[i] = beolvas();
+	for (i = 20-1; i >= 0; --i) {				
+		sum += ertek(ing[i]);
+		if (sum > 100000000)
+			break;
+	}
+	printf("%d\n", i+1);
+	return 0;
+}
+/*****************************************************************/
+Definiáljon adattípust térfogatával (cm3) és relatív alkoholtartalmával (V/V%) 
+megadott alkoholos ital tárolására!
+Írjon függvényt, melynek visszatérési értéke egy alkoholos ital. A függvény 
+az ital whitespace karakterekkel elválasztott paramétereit a standard inputról 
+olvassa be!
+Írjon függvényt, mely meghatározza egy alkoholos ital abszolút (cm3-ben mért) 
+alkoholtartalmát!
+Írjon teljes programot, mely a fenti függvények használatával addig olvas 
+italokat a standard inputról egy max. 200 elemû tömbbe, míg azok összesített 
+alkoholtartalma el nem éri a 2 dl-t!
+
+#include <stdio.h>
+
+typedef struct { double V, rel; } Ital;			
+                                                
+Ital ital_olvas(void)                           
+{                                               
+	Ital ital;                                  
+	scanf("%lf%lf", &ital.V, &ital.rel);        
+	return ital;                                
+}                                               
+                                                
+double abs_alkohol(Ital ital)                   
+{                                               
+	return ital.V * ital.rel;                   
+}                                               
+                                                
+int main_b(void)                                
+{                                               
+	Ital italok[200];                           
+	double sum = 0.0;                           
+	int i;                                      
+	for (i = 0; i < 200 && sum < 20.0; ++i) {   
+		italok[i] = ital_olvas();               
+		sum += abs_alkohol(italok[i]);			
+	}
+	return 0;
+}
