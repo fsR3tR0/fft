@@ -6,10 +6,21 @@ typedef struct list{
         struct list *next;
 }list;
 
+typedef struct list_komplex{
+	float data_Re;
+	float data_Im;
+}list_komplex;
+
 list *beszur_elore(list *l0, u8 mit1, float mit2);
+list *beszur_hatra(list *l0, u8 mit1, float mit2);
+void keres(list *l0, u8 mit1, float mit2);
+void list_delete_last(list *l0);
 void print_list(list *l0);
 void list_free(list *l0);
 void lenght_list(list *l0, u8 *var);
+
+list_komplex *komp_beszur_elore(list_komplex *lk, float mit1, float mit2);
+void print_komplex(list_komplex *lk);
 
 int main(int argc, char *argv[])
 {
@@ -38,6 +49,18 @@ int main(int argc, char *argv[])
         list_free(l);
         return 0;
 }
+
+list_komplex *komp_beszur_elore(list_komplex *lk, float mit1, float mit2){
+
+}
+void print_komplex(list_komplex *lk);
+
+
+list *beszur_hatra(list *l0, u8 mit1, float mit2){
+	
+}
+void keres(list *l0, u8 mit1, float mit2);
+void list_delete_last(list *l0);
 
 void lenght_list(list *l0, u8 *var){
         list *p = l0;
