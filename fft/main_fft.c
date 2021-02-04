@@ -54,6 +54,11 @@ int main(int argc, char *argv[])
 
 	keres(l,200,23.4);
 
+	list_delete_last(l);
+	print_list(l);
+	lenght_list(l, &lght);
+        printf("Hossz: %d\n", lght);
+
         list_free(l);
         return 0;
 }
@@ -97,7 +102,16 @@ void keres(list *l0, u8 mit1, float mit2){
 	}
 }
 
-void list_delete_last(list *l0);
+void list_delete_last(list *l0){
+	list *p = l0;
+
+	while((p->next)->next != NULL){
+		p = p->next;
+	}
+	list *fr = p->next;
+	p->next = NULL;
+	free(fr);
+}
 
 void lenght_list(list *l0, u8 *var){
         list *p = l0;
@@ -130,8 +144,9 @@ void print_list(list *l0){
 			printf("\n");
 			db = 0;
 		}
-	 }
-	printf("\n");
+	}
+	if(db != 0)
+		printf("\n");
 }
 
 void list_free(list *l0){
