@@ -30,6 +30,24 @@ int main(int argc, char *argv[])
         u8 i = 1;
         float j = 1.2;
         u8 lght = 0;
+	FILE *fp;
+	char buffer[100];
+	u8 i_f = 0;
+
+	fp = fopen("test.log","rt");
+	if(fp == NULL){
+		perror("Sikertelen file nyitas.\n");
+		return -1;
+	}else{
+		printf("Sikeres file nyitas\n");
+	}
+
+	fgets(buffer,100,fp);
+	while(buffer[i_f] != '\0'){
+		printf("%c",buffer[i_f]);
+		i_f++;
+	}
+	printf("%s", buffer);
 
 	printf("=============\n");
         printf("FFT lesz majd\n");
