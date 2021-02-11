@@ -1,15 +1,5 @@
 #include "include.h"
-
-typedef struct list{
-        u8 data_u8;
-        float data_f;
-        struct list *next;
-}list;
-
-typedef struct list_komplex{
-	float data_Re;
-	float data_Im;
-}list_komplex;
+#include "list.h"
 
 //list fuggvenyek
 list *beszur_elore(list *l0, u8 mit1, float mit2);
@@ -81,12 +71,20 @@ int main(int argc, char *argv[])
         return 0;
 }
 
+//	==== KOMPLEX ====
 list_komplex *komp_beszur_elore(list_komplex *lk, float mit1, float mit2){
-
+	list_komplex *uj = (list_komplex*)malloc(sizeof(list_komplex));
+	uj -> data_Re = mit1;
+	uj -> data_Im = mit2;
+	uj -> next = lk;
+	
+	return uj; 
 }
-void print_komplex(list_komplex *lk);
+void print_komplex(list_komplex *lk){
+	
+}
 
-
+//	===== Normal =====
 list *beszur_hatra(list *l0, u8 mit1, float mit2){
 	list* uj = (list*)malloc(sizeof(list));
 	uj->data_u8 = mit1;
