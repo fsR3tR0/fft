@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1344260592 source:/home/voxel/Dokumentumok/GrafikaProgramozasa/Peldak/SDL/SDL_Basics/SDLBasic.c
+	<stdio.h>
+	<SDL/SDL.h>
+

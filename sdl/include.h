@@ -1,8 +1,7 @@
 #ifndef INCLUDE_H_
 #define INCLUDE_H_
 
-#include <SDL.h>
-#include <SDL2_gfxPrimitives.h>
+#include <SDL2/SDL.h>
 #include <math.h>
 #include <stdlib.h>
 #include <inttypes.h>
