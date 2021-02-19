@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
 	sdl_init(700,700,&window, &render,"Event-Rajzvaszon");
 //	SDL_RenderClear(render);
 
+	int flag0 = 0;
 	bool quit = false;
 	bool click = false;
 	bool torol = false;
@@ -46,8 +47,37 @@ int main(int argc, char *argv[])
 			 break;
 			case SDL_MOUSEMOTION:
 				if(click){
-					aalineColor(render, elozox, elozoy, event.motion.x, event.motion.y, 0xFFFFFFFF);
+		/*			lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0x00,0xFF);
+					stringRGBA(render,10,10,"Valami",255,255,255,255);
 					rajzoltam = true;
+					//aalineColor(render, elozox, elozoy, event.motion.x, event.motion.y, 0xFFFFFFFF);
+		*/			switch(flag0){
+						case 0:
+							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0xFF,0xFF);
+							stringRGBA(render,10,10,"Feher",255,255,255,255);
+							rajzoltam = true;
+						 break;
+						case 1:
+							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0x00,0x00,0xFF);
+							stringRGBA(render,10,10,"Piros",255,255,255,255);
+							rajzoltam = true;
+						 break;
+						case 2:
+							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0xFF,0x00,0xFF);
+							stringRGBA(render,10,10,"Zold",255,255,255,255);
+							rajzoltam = true;
+						 break;
+						case 3:
+							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0x00,0xFF,0xFF);
+							stringRGBA(render,10,10,"Kek",255,255,255,255);
+							rajzoltam = true;
+						 break;
+						case 4:
+							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0x00,0xFF);
+							stringRGBA(render,10,10,"Valami",255,255,255,255);
+							rajzoltam = true;
+						 break;
+					}
 				}else if(torol){
 				//	lineRGBA(render, elozox, elozoy, event.motion.x, event.motion.y,0x00	,0x00,0x00, 0xFF);
                                   	rajzoltam = true;
@@ -60,6 +90,20 @@ int main(int argc, char *argv[])
 				//SDL_RenderClear(render);
 				boxRGBA(render, 0, 0, 700, 700, 0x00, 0x00, 0x00, 0xFF);
 				rajzoltam = true;
+			 break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_LEFT:
+						if(flag0 > 0){
+							flag0--;
+						}
+					 break;
+					case SDLK_RIGHT:
+						if(flag0 < 4){
+							flag0++;
+						}
+					 break;
+				}
 			 break;
 			case SDL_QUIT:
 				quit = true;
