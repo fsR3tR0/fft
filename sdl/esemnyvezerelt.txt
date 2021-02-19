@@ -1,0 +1,13 @@
+Az SDL_WaitEvent() függvény addig vár, amíg meg nem történik a következő esemény; amint az bekövetkezik, akkor az adatait beteszi az event nevű, 
+SDL_Event típusú struktúrába (azért veszi át cím szerint, hogy ezt meg tudja tenni). A várakozás után az eseményt feldolgozhatjuk,
+ annak típusa szerint:
+
+    case SDL_QUIT: kilépés, a felhasználó az ablak bezárása ×-re kattintott; break;
+    case SDL_MOUSEMOTION: egérmozdulat; break;
+    case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: egérgomb kattintás és elengedés; break;
+    case SDL_KEYDOWN: case SDL_KEYUP: billentyűzet események; break; 
+
+Az event struktúra az esemény típusától függően további információkat tartalmaz. Egérmozgás esetén az event.motion struktúrát tölti ki az 
+SDL_WaitEvent() a koordinátákkal: event.motion.x a vízszintes, event.motion.y a függőleges koordináta. Kattintásnál az event.button struktúra
+adattagjai vesznek fel értékeket: az event.button.button adattag mutatja, hogy melyik gombról van szó SDL_BUTTON_LEFT, SDL_BUTTON_MIDDLE,
+SDL_BUTTON_RIGHT.
