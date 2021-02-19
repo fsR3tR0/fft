@@ -88,8 +88,8 @@ int main(int argc, char *argv[])
 			 break;
 			case SDL_KEYUP:
 				//SDL_RenderClear(render);
-				boxRGBA(render, 0, 0, 700, 700, 0x00, 0x00, 0x00, 0xFF);
-				rajzoltam = true;
+//				boxRGBA(render, 0, 0, 700, 700, 0x00, 0x00, 0x00, 0xFF);
+//				rajzoltam = true;
 			 break;
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym){
@@ -102,6 +102,10 @@ int main(int argc, char *argv[])
 						if(flag0 < 4){
 							flag0++;
 						}
+					 break;
+					case SDLK_UP:
+						boxRGBA(render, 0, 0, 700, 700, 0x00, 0x00, 0x00, 0xFF);
+	                      		        rajzoltam = true;
 					 break;
 				}
 			 break;
