@@ -53,9 +53,11 @@ int main(int argc, char *argv[])
 					//aalineColor(render, elozox, elozoy, event.motion.x, event.motion.y, 0xFFFFFFFF);
 		*/			switch(flag0){
 						case 0:
-							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0xFF,0xFF);
-							stringRGBA(render,10,10,"Feher",255,255,255,255);
-							rajzoltam = true;
+							if(elozoy > 20){
+								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0xFF,0xFF);
+								stringRGBA(render,10,10,"Feher",255,255,255,255);
+								rajzoltam = true;
+							}
 						 break;
 						case 1:
 							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0x00,0x00,0xFF);
