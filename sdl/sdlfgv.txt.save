@@ -1,0 +1,21 @@
+Rajzolos fgvnyek:
+    pixelRGBA(kép, x, y, r, g, b, a) – képpont rajzolása.
+    lineRGBA(kép, x1, y1, x2, y2, r, g, b, a) – szakasz.
+    thickLineRGBA(kép, x1, y1, x2, y2, v, r, g, b, a) – vastag szakasz.
+    rectangleRGBA(kép, x1, y1, x2, y2, r, g, b, a) – téglalap.
+    boxRGBA(kép, x1, y1, x2, y2, r, g, b, a) – kitöltött téglalap.
+    circleRGBA(kép, x1, y1, R, r, g, b, a) – kör.
+    trigonRGBA(kép, x1, y1, x2, y2, x3, y3, r, g, b, a) – háromszög.
+    filledTrigonRGBA(kép, x1, y1, x2, y2, x3, y3, r, g, b, a) – kitöltött háromszög.
+    stringRGBA(kép, x, y, szöveg, r, g, b, a) – szöveg.
+	
+	A vonalas rajzokat (szakasz, kör, háromszög stb.) készítő függvényeknek mind van aa-val kezdődő párjuk is. Ezen felül minden függvénynek van egy
+	nem RGBA-ra, hanem Color-ra végződő nevű párja: az utóbbiak a négy, színt megadó paraméter helyett csak egyetlen egyet várnak. Ez az egyetlen 
+	Uint32 típusú paraméter 0xRRGGBBAA formában tartalmazza a színkomponenseket és az átlátszóság információt. Tehát mind a vörös, zöld, kék 
+	komponensnek, mind az átlátszóságnak egyetlen egy bájt jut.
+	Így egy szín egyetlen egy változóban is eltárolható. A 32 biten megadott színkód bitműveletekkel állítható elő
+	(r<<24 | g<<16 | b<<8 | a). Például az alábbi sorok teljesen ekvivalensek, mindegyik félig átlátszó lila kört rajzol:
+
+	filledCircleRGBA(screen, 320, 240, 100, 255, 0, 255, 128);
+	filledCircleRGBA(screen, 320, 240, 100, 0xFF, 0, 0xFF, 0x80);
+	filledCircleColor(screen, 320, 240, 100, 0xFF00FF80);

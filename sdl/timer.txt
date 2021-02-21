@@ -1,0 +1,36 @@
+idozito letrehozasa -> SDL_AddTimer()
+parameterek:
+	1. mennyi ido mulva hivodjon meg, ezredmasodperc
+	2. melyik fuggveny hivodjon meg
+	3. tetszoleges mutato, parameterkent kapja meg a fgv, de ez lehet NULL is ha nem kell semmire
+fgv visszateresi erteke:
+	SDL_TimerID tipusu azonosito, ezzel hivatkozhatunk az idozitore
+pl.:
+	id = SDL_AddTimer(20,idozit,NULL);
+	uint32_t idozit(uint32_t ms, void *param);
+
+	SDL időzítője által meghívott függvény megkapja paraméterként azt, hogy milyen
+	időközökre lett beállítva, és a tetszőleges felhasználói paramétert. Visszaté
+	rési értéke pedig egy egész szám, hogy legközelebb hány ezredmásodperc múlva
+	hívódjon meg. Legegyszerűbb, ha egy return ms; sorral fejezzük be a függvényt,
+	amiben általában amúgy sincs más, csak egy felhasználói típusú esemény létrehozása, 
+	és beillesztése a várakozási sorba:
+
+	Uint32 idozit(Uint32 ms, void *param) {
+		SDL_Event ev;
+		ev.type = SDL_USEREVENT;
+		SDL_PushEvent(&ev);
+		return ms;   /* ujabb varakozas */
+	}
+Esemenykezelo hurkot ki kell egesziteni az SDL_USEREVENT tipusu esemenyfeldolgozassal.
+
+Itt nagyon fontos, hogy csak a kép teljes megrajzolása után hívjuk meg az SDL_RenderPresent()-et. 
+Ha a törlés után is meghívnánk, akkor az animáció villódzna (flicker), így viszont szép, folytonos 
+a megjelenítés. Törölni viszont kell, hiszen mindig az előzőleg megrajzolt képet módosítjuk.
+
+Nem csak egy, hanem akár egyszerre több időzítőt is létrehozhatunk. Hogy ezeket meg lehessen 
+különböztetni, az általuk generált eseményeknek érdemes külön azonosítót adni. Az események típusa, 
+az event.type adattag nem felsorolt típus, hanem egy egyszerű egész szám. Az SDL dokumentációja 
+pedig azt mondja, hogy az SDL_USEREVENT konstanstól (ez egy felsorolt típusú érték) fölfelé 
+bármilyen saját eseményt definiálhatunk. Ezért ezeket használhatjuk akár úgy is, hogy az egyik 
+időzítőnk SDL_USEREVENT+1, a másik SDL_USEREVENT+2 stb. típusú eseményeket generál.
