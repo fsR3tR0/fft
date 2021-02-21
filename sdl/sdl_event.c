@@ -8,7 +8,9 @@ int main(int argc, char *argv[])
 
 	sdl_init(700,700,&window, &render,"Event-Rajzvaszon");
 //	SDL_RenderClear(render);
-
+	stringRGBA(render,10,10,"Feher",255,255,255,255);
+	SDL_RenderPresent(render);
+	
 	int flag0 = 0;
 	bool quit = false;
 	bool click = false;
@@ -27,9 +29,6 @@ int main(int argc, char *argv[])
 					elozox = event.button.x;
 					elozoy = event.button.y;
 				}else if(event.button.button == SDL_BUTTON_RIGHT){
-					//SDL_RenderClear(render);
-				//	boxColor(render,100,100,100,100,0x00000FFF);
-			//		rajzoltam = true;
 					torol = true;
 					elozox = event.button.x;
                                         elozoy = event.button.y;
@@ -39,10 +38,7 @@ int main(int argc, char *argv[])
 				if(event.button.button == SDL_BUTTON_LEFT){
 					click = false;
 				}else if(event.button.button == SDL_BUTTON_RIGHT){
-                                        //SDL_RenderClear(render);
-                                  //     boxColor(render,1000,1000,1000,1000,0x0);
-                                       // rajzoltam = true;
-					torol = false;
+                                  	torol = false;
                                 }
 			 break;
 			case SDL_MOUSEMOTION:
@@ -53,34 +49,38 @@ int main(int argc, char *argv[])
 					//aalineColor(render, elozox, elozoy, event.motion.x, event.motion.y, 0xFFFFFFFF);
 		*/			switch(flag0){
 						case 0:
-							if(elozoy > 20){
+							if(elozoy > 25){
 								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0xFF,0xFF);
-								stringRGBA(render,10,10,"Feher",255,255,255,255);
+//								stringRGBA(render,10,10,"Feher",255,255,255,255);
 								rajzoltam = true;
 							}
 						 break;
 						case 1:
-							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0x00,0x00,0xFF);
-							stringRGBA(render,10,10,"Piros",255,255,255,255);
-							rajzoltam = true;
+							if(elozoy > 25){
+								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0x00,0x00,0xFF);
+								rajzoltam = true;
+							}
 						 break;
 						case 2:
-							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0xFF,0x00,0xFF);
-							stringRGBA(render,10,10,"Zold",255,255,255,255);
-							rajzoltam = true;
+							if(elozoy > 25){
+								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0xFF,0x00,0xFF);
+								rajzoltam = true;
+						 	}
 						 break;
 						case 3:
-							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0x00,0xFF,0xFF);
-							stringRGBA(render,10,10,"Kek",255,255,255,255);
-							rajzoltam = true;
+							if(elozoy > 25){
+								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0x00,0x00,0xFF,0xFF);
+								rajzoltam = true;
+						 	}
 						 break;
 						case 4:
-							lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0x00,0xFF);
-							stringRGBA(render,10,10,"Valami",255,255,255,255);
-							rajzoltam = true;
+							if(elozoy > 25){
+								lineRGBA(render,elozox,elozoy,event.motion.x,event.motion.y,0xFF,0xFF,0x00,0xFF);
+								rajzoltam = true;
+						 	}
 						 break;
 					}
-				}else if(torol){
+				}else if(torol && elozoy > 25){
 				//	lineRGBA(render, elozox, elozoy, event.motion.x, event.motion.y,0x00	,0x00,0x00, 0xFF);
                                   	rajzoltam = true;
 					filledCircleRGBA(render,elozox, elozoy, 5, 0x00, 0x00,0x00,0xFF);
@@ -99,14 +99,70 @@ int main(int argc, char *argv[])
 						if(flag0 > 0){
 							flag0--;
 						}
+						switch(flag0){
+                                        	        case 0:
+                                                 		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+						                stringRGBA(render,10,10,"Feher",255,255,255,255);
+                                                 		rajzoltam = true;
+                                                	 break;
+                                                	case 1:
+                                                      		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Piros",255,255,255,255);
+                                                    		rajzoltam = true;
+                                                 	 break;
+                                                	case 2:
+  								boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+                                                        	stringRGBA(render,10,10,"Zold",255,255,255,255);
+                                                        	rajzoltam = true;
+                                                 	 break;
+                                                	case 3:
+                                                       		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Kek",255,255,255,255);
+                                                     		rajzoltam = true;
+                                                 	 break;
+                                                	case 4:
+                                                        	boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Narga",255,255,255,255);
+                                                        	rajzoltam = true;
+                                                 	break;
+						}
+
 					 break;
 					case SDLK_RIGHT:
 						if(flag0 < 4){
 							flag0++;
 						}
+						switch(flag0){
+                                        	        case 0:
+                                                 		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+						                stringRGBA(render,10,10,"Feher",255,255,255,255);
+                                                 		rajzoltam = true;
+                                                	 break;
+                                                	case 1:
+                                                      		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Piros",255,255,255,255);
+                                                    		rajzoltam = true;
+                                                 	 break;
+                                                	case 2:
+  								boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+                                                        	stringRGBA(render,10,10,"Zold",255,255,255,255);
+                                                        	rajzoltam = true;
+                                                 	 break;
+                                                	case 3:
+                                                       		boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Kek",255,255,255,255);
+                                                     		rajzoltam = true;
+                                                 	 break;
+                                                	case 4:
+                                                        	boxRGBA(render,0,0,60,25,0x00,0x00,0x00,0xFF);
+								stringRGBA(render,10,10,"Narga",255,255,255,255);
+                                                        	rajzoltam = true;
+                                                 	break;
+						}
 					 break;
 					case SDLK_UP:
-						boxRGBA(render, 0, 0, 700, 700, 0x00, 0x00, 0x00, 0xFF);
+						boxRGBA(render,60,0,700,700,0x00,0x00,0x00,0xFF);
+						boxRGBA(render, 0, 25, 700, 700, 0x00, 0x00, 0x00, 0xFF);
 	                      		        rajzoltam = true;
 					 break;
 				}
