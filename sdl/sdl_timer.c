@@ -47,6 +47,14 @@ int main(int argc, char *argv[])
 				y2++;
 				SDL_RenderPresent(renderer);
 			 break;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_ESCAPE:
+						printf("'ESC' pressed, window closing.\n");
+						quit = true;
+					 break;
+				}
+			 break;
            	 	case SDL_QUIT:
                 		quit = true;
                 	 break;
