@@ -10,17 +10,19 @@ int main(int argc, char *argv[])
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	bool quit = false;
-	
+	int x2 = 0, y2 = 0;
+
 	sdl_init(ABLAK,ABLAK,&window,&renderer,"Timer");
-	
+
 	SDL_TimerID id = SDL_AddTimer(20,idozit,NULL);
-	
+	SDL_TimerID id2 = SDL_AddTimer(30,idozit2,NULL);
+
 	labda g;
 	g.x = ABLAK/2;
 	g.y = ABLAK/3;
 	g.vx = 3;
 	g.vy = 2;
-	
+
 	while(!quit){
 		SDL_Event event;
 		SDL_WaitEvent(&event);
@@ -39,7 +41,12 @@ int main(int argc, char *argv[])
                 		filledCircleRGBA(renderer, g.x, g.y, GOLYO_R, 0x80, 0x80, 0xFF, 0xFF);
                 		SDL_RenderPresent(renderer);
                		 break;
- 
+ 			case SDL_USEREVENT+1:
+				trigonRGBA(renderer,x2,y2,x2+2,y2+2,x2+5,y2+5, 0xFF, 0xFF, 0xFF,0xFF);
+				x2++;
+				y2++;
+				SDL_RenderPresent(renderer);
+			 break;
            	 	case SDL_QUIT:
                 		quit = true;
                 	 break;
@@ -47,7 +54,7 @@ int main(int argc, char *argv[])
     	}
     /* idozito torlese */
     	SDL_RemoveTimer(id);
-	
+	SDL_RemoveTimer(id2);
 	/*
 	SDL_Event veg;
 	while(SDL_WaitEvent(&veg) && veg.type != SDL_QUIT);

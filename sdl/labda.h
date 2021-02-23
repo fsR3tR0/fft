@@ -9,5 +9,6 @@ typedef struct labda{
 }labda;
 
 u32 idozit(u32 ms,void *param);
+u32 idozit2(u32 ms,void *param);
 
 #endif //LABDA_H_
